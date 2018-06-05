@@ -1,0 +1,22 @@
+{
+	"parserOptions": {
+		"ecmaVersion": 6
+	},
+	"rules": {
+		"indent": ["warn", "tab"],
+		"linebreak-style": ["warn", "unix"],
+		"semi": ["error", "always"],
+		"quotes": ["warn", "double"],
+		"no-unused-vars": ["off", {"vars": "none", "args": "none", "varsIgnorePattern": "*"}],
+        "no-console": ["error"],
+        "no-undef": ["off"]
+	},
+	"env": {
+		"es6": true,
+		"browser": true,
+		"node": false
+	},
+	"extends": [
+		"eslint:recommended"
+	]
+}

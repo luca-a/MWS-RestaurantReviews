@@ -1,0 +1,105 @@
+#reviews-container 
+    float: left
+    width: 100%
+    text-align: center
+
+    h2 
+        margin: 0 0 0 0
+        padding: 25px 0
+        width: 100%
+        background: rgb(68, 68, 68)
+        color: rgb(207, 207, 207)
+        text-transform: uppercase
+        letter-spacing: 0.2em
+        font-weight: 300
+
+.reviews-list 
+    display: flex
+    flex-wrap: wrap
+    justify-content: center
+    background-color: transparent
+    list-style: none
+    margin: 0
+    width: 100%
+    padding: 5px
+
+    li 
+        background: transparent
+        display: block
+        list-style-type: none
+        margin: 5px
+        position: relative
+        width: 100%
+
+        .review-container 
+            border: $list-element-border
+            width: 100%
+            background: rgb(255, 255, 255)
+
+            .header
+                overflow: hidden
+                background: $secondary-header-background
+                padding: 10px
+                color: $secondary-header-text-color
+
+            .name
+                float: left
+                display: inline
+                margin: 0 !important
+                font-weight: 500
+
+            .date
+                float: right
+                font-size: 0.95em
+                margin: 0 !important
+                display: inline
+                font-weight: 300
+
+            .rating
+                display: block
+                margin: 0px auto
+                padding: 10px 
+                width: auto
+                text-transform: uppercase
+                letter-spacing: 0.2em
+                font-weight: 500
+                color: rgb(255, 255, 255)
+
+                &.green
+                    background: rgb(30, 130, 76)
+
+                &.red
+                    background: rgb(192, 57, 43)
+
+        .comment-container
+            padding: 20px
+
+            
+
+/* from http://hackingui.com/front-end/a-pure-css-solution-for-multiline-text-truncation/ */
+.comment-text 
+    text-align: justify
+    margin: 0
+    line-height: 1.3em //adjusted
+
+    &.collapsed 
+        overflow: hidden
+        position: relative
+        max-height: 6.5em //line-height * 5 (rows) adjusted
+        margin-right: -1em
+        padding-right: 1em
+    
+    &.collapsed:before 
+        content: '...'
+        position: absolute
+        right: 0
+        bottom: 0
+
+    &.collapsed:after 
+        content: ''
+        position: absolute
+        right: 0
+        width: 1em
+        height: 1em
+        margin-top: 0.2em
+        background: rgb(255, 255, 255)

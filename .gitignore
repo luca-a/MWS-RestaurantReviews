@@ -1,0 +1,22 @@
+node_modules
+dist
+
+#server .gitignore
+server/config/local.js
+server/node_modules
+server/bower_components
+server/#.tmp
+server/dump.rdb
+server/lib-cov
+server/*.seed
+server/*.log
+server/*.out
+server/*.pid
+server/npm-debug.log
+server/*~
+server/*#
+server/.DS_STORE
+server/.netbeans
+server/nbproject
+server/.idea
+server/.node_history

@@ -1,0 +1,60 @@
+#restaurants-wrapper 
+    float: left
+    width: 100%
+    text-align: center
+
+    h2 
+        margin: 0 0 15px 0
+        padding: 25px 0
+        width: 100%
+        background: $secondary-header-background
+        color: $secondary-header-text-color
+        text-transform: uppercase
+        letter-spacing: 0.2em
+        font-weight: 300
+
+.restaurants-list 
+    display: flex
+    flex-wrap: wrap
+    justify-content: center
+    background-color: transparent
+    list-style: none
+    margin: 0
+    width: 100%
+    padding: 5px
+
+    .image 
+        width: 100%
+        height: auto
+        margin: 0
+    
+    li 
+        background: $list-element-background
+        border: $list-element-border
+        text-align: center
+        width: 100%
+        margin: 5px
+
+    .button
+        background: $list-element-button-background
+        border-bottom: $list-element-button-border
+        color: $list-element-button-text-color
+        display: inline-block
+        margin: 15px auto
+        padding: 10px 30px
+        text-align: center
+        text-decoration: none
+        text-transform: uppercase
+        letter-spacing: 0.1em
+        transition: color 0.3s, background 0.3s, box-shadow 0.3s, border 0.3s
+    
+    .button:hover 
+        color: $primary-accent-color !important
+        border-bottom: 3px solid $primary-accent-color
+    
+    .button:focus 
+        color: $primary-accent-color
+        -webkit-box-shadow: 0px 0px 50px -5px $primary-accent-color
+        -moz-box-shadow: 0px 0px 50px -5px $primary-accent-color
+        box-shadow: 0px 0px 50px -5px $primary-accent-color
+    

@@ -1,0 +1,36 @@
+{
+  "name": "mws-restaurant-reviews",
+  "version": "0.5.0",
+  "description": "Project for udacity mws nd",
+  "main": "gulpfile.js",
+  "scripts": {
+    "developement": "node server/server.js & gulp",
+    "build": "gulp build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "LA",
+  "license": "ISC",
+  "dependencies": {
+    "babel-core": "^6.26.3",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "browser-sync": "^2.24.4",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^5.0.0",
+    "gulp-babel": "^7.0.1",
+    "gulp-clone": "^2.0.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-concat-multi": "^1.0.1",
+    "gulp-eslint": "^4.0.2",
+    "gulp-if": "^2.0.2",
+    "gulp-image-resize": "^0.13.0",
+    "gulp-inject": "^4.3.2",
+    "gulp-polyfiller": "0.0.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^4.0.1",
+    "gulp-uglify": "^3.0.0",
+    "idb": "^2.1.2",
+    "merge-stream": "^1.0.1",
+    "run-sequence": "^2.2.1"
+  }
+}

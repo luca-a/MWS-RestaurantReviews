@@ -1,0 +1,35 @@
+#toasts 
+    position: fixed
+    z-index: 3
+    bottom: 0
+    left: 0
+    right: 0
+  
+.toast 
+    color: #fff
+    background: $secondary-header-background
+    padding: 14px 24px
+    padding-right: 0
+    opacity: 1
+    overflow: hidden
+
+    .toast-content 
+        text-transform: uppercase
+        letter-spacing: 0.2em
+        margin-right: 48px
+        display: inline
+
+    button 
+        cursor: pointer
+        margin: 0
+        margin-right: 24px
+        color: $primary-accent-color
+        font-size: 1em
+        text-transform: uppercase
+        letter-spacing: 0.2em
+        background: transparent
+        border: none
+    
+    button:focus 
+        color: $link-color-focus
+    
