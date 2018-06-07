@@ -74,7 +74,9 @@ const resize = (images, sizes) => {
 					upscale: false,
 					quality: size.quality || 1,
 					noProfile: true,
-					imageMagick: true
+					imageMagick: false
+				}).on("error", e => {
+					console.log(e);
 				})
 			)
 			.pipe(
