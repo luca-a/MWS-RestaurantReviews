@@ -3,6 +3,10 @@
   "version": "0.5.0",
   "description": "Project for udacity mws nd",
   "main": "gulpfile.js",
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/luca-a/MWS-RestaurantReviews.git"
+  },
   "scripts": {
     "developement": "node server/server.js & gulp",
     "build": "gulp build",
