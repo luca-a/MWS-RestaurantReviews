@@ -37,7 +37,7 @@
 
     .button
         background: $list-element-button-background
-        border-bottom: $list-element-button-border
+        border: 1px solid $list-element-button-background
         color: $list-element-button-text-color
         display: inline-block
         margin: 15px auto
@@ -46,13 +46,14 @@
         text-decoration: none
         text-transform: uppercase
         letter-spacing: 0.1em
-        transition: color 0.3s, background 0.3s, box-shadow 0.3s, border 0.3s
+        transition: color 0.2s, background 0.2s, box-shadow 0.2s, border 0.2s
     
-    .button:hover 
-        color: $primary-accent-color !important
-        border-bottom: 3px solid $primary-accent-color
+    .button:hover
+        color: rgb(0, 0, 0)
+        background: $list-element-background
     
     .button:focus 
-        color: $primary-accent-color
-        box-shadow: 0 0 0 .3rem rgba($primary-accent-color,$default-focus-shadow-opacity);
-    
+        color: $header-background
+        background: $list-element-background
+        border: 1px solid $primary-accent-color
+        box-shadow: 0 0 0 .3rem rgba($primary-accent-color, $default-focus-shadow-opacity)
