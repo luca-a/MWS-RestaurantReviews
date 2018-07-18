@@ -13,6 +13,11 @@
         letter-spacing: 0.2em
         font-weight: 300
 
+    .no-reviews
+        margin: 10px
+        padding: 20px
+        background: $main-wrapper-background
+
 .reviews-list 
     display: flex
     flex-wrap: wrap
@@ -22,6 +27,13 @@
     margin: 0
     width: 100%
     padding: 5px
+
+    &:empty
+        margin: 0
+        padding: 0
+
+        & + .no-reviews
+            display: block !important
 
     li 
         background: transparent

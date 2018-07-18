@@ -76,16 +76,16 @@ class RestaurantDetail {
 	}
 
 	createReviews(reviews) {
+		/*
 		if(!reviews || reviews.length === 0) {
 			const empty = this.defaultP.cloneNode();
-			empty.style.textAlign = "center";
-			empty.innerHTML = "No reviews yet!";
+			empty.innerHTML = "No reviews yet";
 
 			this.reviewContainer.appendChild(empty);
 
 			return false;
 		}
-
+		*/
 		for(let review of reviews) {
 			this.reviewList.appendChild(this.createReview(review));
 		}
