@@ -6,22 +6,26 @@ const configuration = {
 			{
 				width: 250,
 				suffix: "x1",
-				quality: 1
+				quality: 1,
+				webp: true
 			},
 			{
 				width: 346,
 				suffix: "x1",
-				quality: 1
+				quality: 1,
+				webp: true
 			},
 			{
 				width: 692,
 				suffix: "x2",
-				quality: 0.9
+				quality: 0.8,
+				webp: true
 			}
 		]
 	},
 	destination: "./dist",
 	files: {
+		destination: "./dist/**/*",
 		javascript: [
 			"src/javascript/**/*.js",
 			"!src/javascript/sw/**/*.js"
@@ -30,7 +34,7 @@ const configuration = {
 			"src/javascript/libraries/*.js",
 			"src/javascript/external/*.js"
 		],
-		main: "src/javascript/main/*.js",
+		main: "src/javascript/main/main.js",
 		sw: "src/javascript/sw/main.js",
 		public: "src/public/**/*",
 		images: "src/images/restaurants/**/*",
@@ -43,7 +47,6 @@ const configuration = {
 let tasksettings = {
 	"compress": false,
 	"autoprefixer": false,
-	"polyfiller": false,
 	"transpile": false
 };
 
@@ -58,6 +61,7 @@ const merge = require("merge-stream");
 const resize = (images, sizes) => {
 	const imageResize = require("gulp-image-resize");
 	const clone = require("gulp-clone");
+	const webp = require('gulp-webp');
 
 	let stream = merge();
 
@@ -80,6 +84,9 @@ const resize = (images, sizes) => {
 				})
 			)
 			.pipe(
+				gulpif(size.webp, webp())
+			)
+			.pipe(
 				rename({
 					suffix: `-${size.width}${size.suffix || ""}`
 				})
@@ -93,7 +100,6 @@ const resize = (images, sizes) => {
 const production = () => {
 	tasksettings.compress = true;
 	tasksettings.autoprefixer = true;
-	tasksettings.polyfiller = true;
 	tasksettings.transpile = true;
 };
 
@@ -115,7 +121,7 @@ gulp.task("default", ["html", "images", "styles", "lint", "scripts", "service-wo
 	gulp.watch(configuration.files.sw, ["service-worker"]);
 	//gulp.watch(configuration.files.public, ["public"]);
 	gulp.watch(configuration.files.html, ["html"]);
-	gulp.watch(configuration.destination + configuration.files.html).on("change", browserSync.reload);
+	gulp.watch(configuration.files.destination).on("change", browserSync.reload);
 
 	browserSync.init({
 		server: configuration.destination
@@ -171,16 +177,10 @@ gulp.task("lint", done => {
 
 gulp.task("scripts", done => {
 	const concat = require("gulp-concat");
-    
-    let files = configuration.files.libraries;
-
-    if(tasksettings.polyfiller) {
-        files.push("node_modules/babel-polyfill/dist/polyfill.js");
-	}
-
+    	
 	merge(
         gulp.src(
-            files
+            configuration.files.libraries
         )
 		.pipe(
 			concat("bundle.js")
