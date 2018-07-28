@@ -1,17 +1,18 @@
 {
   "name": "mws-restaurant-reviews",
   "version": "0.5.0",
-  "description": "Project for udacity mws nd",
+  "description": "Project for udacity MWS ND",
   "main": "gulpfile.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/luca-a/MWS-RestaurantReviews.git"
   },
   "scripts": {
-    "developement": "node server/server.js & gulp",
+    "developement": "concurrently \"npm:server\" \"gulp\"",
+    "production": "concurrently \"npm:server\" \"npm:build\" \"npm:http-server\"",
     "build": "gulp build",
     "server": "node server/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "http-server": "http-server ./dist"
   },
   "author": "LA",
   "license": "ISC",
@@ -20,6 +21,7 @@
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "browser-sync": "^2.24.4",
+    "concurrently": "^3.6.0",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^5.0.0",
     "gulp-babel": "^7.0.1",
@@ -29,10 +31,11 @@
     "gulp-eslint": "^4.0.2",
     "gulp-if": "^2.0.2",
     "gulp-image-resize": "^0.13.0",
-    "gulp-polyfiller": "0.0.1",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^4.0.1",
     "gulp-uglify": "^3.0.0",
+    "gulp-webp": "^3.0.0",
+    "http-server": "^0.11.1",
     "idb": "^2.1.2",
     "merge-stream": "^1.0.1",
     "run-sequence": "^2.2.1"
