@@ -3,14 +3,11 @@
 ### Installation 
   - Make sure you have downloaded and installed `GraphicsMagick` (https://sourceforge.net/projects/graphicsmagick/files/)
   - Install `gulp-cli` by running the command `npm install -g gulp-cli`
-  - Run the following commands:
-    1. `npm install` to install all the dependencies
-    2. `cd server` to enter the server directory
-    3. `npm install` again to install all the dependencies of the server
+  - Run `npm install` to install all the dependencies
+  - Make sure the sails server (https://github.com/udacity/mws-restaurant-stage-3) is running
 
 #### Developement mode
   - Run `npm run developement` or `gulp` in the root directory of the project
 
 #### Production mode
-  - Run `npm run build` or `gulp build` in the root directory of the project
-  - Run your favourite http server in the `dist` folder
+  - Run `npm run production` or `gulp build` in the root directory of the project
