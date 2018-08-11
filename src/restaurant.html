@@ -15,24 +15,17 @@
 	<link rel="apple-touch-icon" sizes="144x144" href="data/icons/apple-icon-144x144.png">
 	<link rel="apple-touch-icon" sizes="152x152" href="data/icons/apple-icon-152x152.png">
 	<link rel="apple-touch-icon" sizes="180x180" href="data/icons/apple-icon-180x180.png">
-	<link rel="icon" type="image/png" sizes="192x192"  href="data/icons/android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="192x192" href="data/icons/android-icon-192x192.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="data/icons/favicon-32x32.png">
 	<link rel="icon" type="image/png" sizes="96x96" href="data/icons/favicon-96x96.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="data/icons/favicon-16x16.png">
 	<meta name="msapplication-TileColor" content="#076e94">
 	<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
-	<meta name="theme-color" content="#076e94"/>
+	<meta name="theme-color" content="#076e94" />
 
 	<title>Restaurant Reviews</title>
 
 	<link rel="manifest" href="data/manifest.json">
-
-	<link rel="stylesheet" href="css/main.css">
-	<link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
-	
-	<script type="application/javascript" src="js/bundle.js"></script>
-	<script type="application/javascript" src="js/details.js"></script>
-	<script async defer src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initMap"></script>
 </head>
 
 <body>
@@ -40,28 +33,39 @@
 		<header>
 			<h1>
 				Restaurant Reviews
-            </h1>
-            
-            <ul id="breadcrumb">
-                <li><a class="breadcrumb-home" href="/">Home</a></li>
-            </ul>
+			</h1>
+
+			<ul id="breadcrumb">
+				<li>
+					<a class="breadcrumb-home" href="/">Home</a>
+				</li>
+			</ul>
 		</header>
 
 		<main>
 			<section id="map-wrapper">
 				<div class="map" role="application">
+					<div class="loader-container">
+						<div class="loader"></div>
+					</div>
+					<img id="static_map" alt="Map showcase"></img>
 				</div>
 				<div class="screen-reader-only">
 					<h2>Address</h2>
-					<ul id="accessibility-map">
+					<ul class="accessibility-map">
 					</ul>
 				</div>
-            </section>
-            
-            <section id="restaurant-wrapper">
-				<h2 class="name"></h2>
+			</section>
+
+			<section id="restaurant-wrapper">
+				<h2>
+					<span class="name"></span>
+					<span class="star-icon brackets-effect" aria-label="Favorite " role="checkbox" aria-checked="false" tabindex="0" data-restaurant-id="">✪</span>
+				</h2>
 				<div class="restaurant-details">
 					<div class="image-container">
+						<picture class="image-container">
+						</picture>
 					</div>
 					<div class="data-container">
 						<p class="cuisine"></p>
@@ -76,9 +80,9 @@
 						</table>
 					</div>
 				</div>
-            </section>
+			</section>
 
-            <section id="reviews-container">
+			<section id="reviews-container">
 				<h2>Reviews</h2>
 				<ul class="reviews-list"></ul>
 				<div class="no-reviews" style="display: none">
@@ -86,16 +90,85 @@
 						No reviews yet
 					</p>
 				</div>
-            </section>
+				<ul class="new-review-container reviews-list">
+
+				</ul>
+				<div class="buttons">
+					<button class="add-review" aria-label="Add review"></button>
+				</div>
+			</section>
 		</main>
 
 		<footer>
-            Copyright (c) 2018 <strong><a id="footer-home" href="/">Restaurant Reviews</a></strong> All Rights Reserved.
-        </footer>
+			Copyright (c) 2018
+			<strong>
+				<a id="footer-home" href="/">Restaurant Reviews</a>
+			</strong> All Rights Reserved.
+		</footer>
 	</div>
 
-	<div id="toasts" class="toasts" aria-live="polite" role="dialog"></div>
+	<div id="alerts">
+		<div id="toasts" class="toasts" aria-live="polite" role="dialog"></div>
+	</div>
 
+	<div id="templates-container" style="display: none !important">
+		<li class="review" data-review-id="">
+			<div class="review-container">
+				<div class="header">
+					<p class="name"></p>
+					<p class="date"></p>
+				</div>
+				<div class="header">
+					<div class="rating"></div>
+					<div class="controls-container" data-review-id="">
+						<span class="brackets-effect edit" aria-label="Edit review" tabindex="0" title="Edit">🖉</span>
+						<span class="brackets-effect remove" aria-label="Remove review" tabindex="0" title="Remove">🗑</span>
+					</div>
+				</div>
+				<div class="comment-container">
+					<p class="comment-text collapsed">
+					</p>
+				</div>
+			</div>
+		</li>
+
+		<form class="add-review-form review">
+			<div class="review-container">
+				<div class="header">
+					<input type="text" name="name" id="username-input" class="username-input name" aria-label="Username" placeholder="Enter your name"
+					 required>
+					<p class="date"></p>
+				</div>
+				<div class="header">
+					<div class="rating">
+						<input type="radio" name="rating" value="1" aria-label="Rate a 1 out of 5" title="1 out of 5" required>
+						<input type="radio" name="rating" value="2" aria-label="Rate a 2 out of 5" title="2 out of 5">
+						<input type="radio" name="rating" value="3" aria-label="Rate a 3 out of 5" title="3 out of 5">
+						<input type="radio" name="rating" value="4" aria-label="Rate a 4 out of 5" title="4 out of 5">
+						<input type="radio" name="rating" value="5" aria-label="Rate a 5 out of 5" title="5 out of 5">
+					</div>
+				</div>
+				<div class="comment-container">
+					<p class="comment-text collapsed">
+					</p>
+					<textarea type="text" name="comments" id="comment-input" class="comment" aria-label="Comment" placeholder="Enter your comment" required></textarea>
+				</div>
+
+				<input type="number" name="restaurant_id" class="restaurant_id" hidden style="display: none">
+
+				<button class="submit-button button" type="submit">
+					Submit
+				</button>
+			</div>
+		</form>
+
+		<div class="toast" style="display: inherit;">
+			<div class="toast-content">
+			</div>
+			<div class="buttons">
+			</div>
+		</div>
+	</div>
 </body>
 
 </html>

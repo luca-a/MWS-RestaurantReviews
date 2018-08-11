@@ -26,13 +26,6 @@
 	<title>Restaurant Reviews</title>
 
 	<link rel="manifest" href="data/manifest.json">
-
-	<link rel="stylesheet" href="css/main.css">
-	<link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
-
-	<script type="application/javascript" src="js/bundle.js"></script>
-	<script type="application/javascript" src="js/home.js"></script>
-	<script async defer src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initMap"></script>
 </head>
 
 <body>
@@ -46,6 +39,11 @@
 		<main>
 			<section id="map-wrapper">
 				<div class="map" role="application">
+					<div class="loader-container">
+						<div class="loader">
+						</div>
+					</div>
+					<img id="static_map" alt="Map showcase"></img>
 				</div>
 				<div class="screen-reader-only">
 					<h2>Map addresses</h2>
@@ -91,7 +89,34 @@
 		</footer>
 	</div>
 
-	<div id="toasts" aria-live="polite" role="dialog"></div>
+	<div id="alerts">
+		<div id="toasts" class="toasts" aria-live="polite" role="dialog"></div>
+	</div>
+
+	<div id="templates-container" style="display: none !important">
+		<li class="restaurant">
+			<picture class="image-container">
+			</picture>
+			<h3 class="heading">
+				<span class="name"></span>
+				<span class="star-icon brackets-effect" aria-label="Favorite " role="checkbox" aria-checked="false" tabindex="0" data-restaurant-id="">✪</span>
+			</h3>
+			<p class="location"></p>
+			<p class="address"></p>
+			<a class="button">View Details</a>
+		</li>
+
+		<div class="toast" style="display: inherit;">
+			<div class="toast-content">
+			</div>
+			<div class="buttons">
+			</div>
+		</div>
+
+		<!--
+		<img id="static_map" src="https://maps.googleapis.com/maps/api/staticmap?center=33.29939,-84.55608&zoom=12&size=500x300&format=jpg&maptype=roadmap&markers=color:red"></img>
+		-->
+	</div>
 </body>
 
 </html>

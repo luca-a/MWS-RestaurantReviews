@@ -1,6 +1,9 @@
 * 
     box-sizing: border-box
 
+*:focus
+    outline: none
+
 html, body 
     position: absolute
     top: 0
@@ -25,10 +28,49 @@ header, main, footer
     width: 100%
     overflow: hidden
 
-a 
+a
 	color: $primary-accent-color
 	text-decoration: none
-
-a:focus 
+    
+a:focus
     color: $link-color-focus
     text-decoration: underline
+
+a:hover
+    color: $link-color-focus
+
+.button
+    background: $list-element-button-background
+    border: 1px solid $list-element-button-background
+    color: $list-element-button-text-color
+    display: inline-block
+    margin: 15px auto
+    padding: 10px 30px
+    text-align: center
+    text-decoration: none
+    text-transform: uppercase
+    cursor: pointer
+    letter-spacing: 0.1em
+    transition: color 0.2s, background 0.2s, box-shadow 0.2s, border 0.2s
+        
+    &:hover
+        color: rgb(0, 0, 0)
+        background: $list-element-background
+        
+    &:focus
+        transform: translateZ(0)
+        color: $header-background
+        background: $list-element-background
+        border: 1px solid $primary-accent-color
+        box-shadow: 0 0 0 .3rem rgba($list-element-button-background, $default-focus-shadow-opacity)
+
+.star-icon
+    font-size: 1.4em
+    cursor: pointer
+    background: transparent
+
+    &:hover
+        text-shadow: 0 0 5px rgba($light-background, 0.75)
+
+    &[aria-checked="true"]
+        color: #DB3A00

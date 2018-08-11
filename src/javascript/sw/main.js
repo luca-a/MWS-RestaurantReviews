@@ -1,4 +1,5 @@
-const staticCacheName = "restaurant-reviews-v1", imageCache = "restaurant-reviews-images-v1";
+const staticCacheName = "restaurant-reviews-v1",
+	imageCache = "restaurant-reviews-images-v1";
 
 var allCaches = [
 	staticCacheName,
@@ -7,12 +8,12 @@ var allCaches = [
 
 const resources = [
 	"/",
-	"/restaurant.html",
-	"css/main.css",
-	"js/home.js",
-	"js/details.js",
-	"js/bundle.js"
+	"/restaurant.html"
 ];
+
+const syncOfflineActions = () => {
+
+};
 
 const servePage = request => {
 	const regex = /\/.*?\.html/g,
@@ -82,27 +83,48 @@ self.addEventListener("activate", event => {
 });
 
 self.addEventListener("fetch", event => {
-	var requestUrl = new URL(event.request.url);
+	let request = event.request.clone();
 
-	if(requestUrl.origin === location.origin) {
-		if(requestUrl.pathname.includes(".jpg")) {
-			event.respondWith(serveImage(event.request));
-			return;
-		}
+	switch(request.method) {
+		case "GET":
+			let requestUrl = new URL(request.url);
 
-		if(requestUrl.pathname.includes(".html")) {
-			event.respondWith(servePage(event.request));
-			return;
-		}
+			if(requestUrl.origin === location.origin) {
+				if(requestUrl.pathname.includes(".jpg")) {
+					event.respondWith(serveImage(request));
+					return;
+				}
+		
+				if(requestUrl.pathname.includes(".html")) {
+					event.respondWith(servePage(request));
+					return;
+				}
+		
+				if(requestUrl.pathname.includes(".js") || requestUrl.pathname.includes(".css")) {
+					event.respondWith(serve(request));
+					return;
+				}
+			}
+		
+			event.respondWith(
+				caches.match(request).then(response => {
+					return response || fetch(request);
+				}).catch(error => {
+					return new Response("Offline");
+				})
+			);
+			break;
+		case "POST":
+		case "PUT":
+		case "DELETE":
+			console.log(request);
 	}
+});
 
-	event.respondWith(
-		caches.match(event.request).then(response => {
-			return response || fetch(event.request);
-		}).catch(error => {
-			return new Response("Offline");
-		})
-	);
+self.addEventListener("sync", function(event) {
+	if(event.tag == "sync-actions") {
+		event.waitUntil(syncOfflineActions());
+	}
 });
 
 self.addEventListener("message", event => {

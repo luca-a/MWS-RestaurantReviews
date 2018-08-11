@@ -1,0 +1,17 @@
+/* Inspiration from https://tympanus.net/codrops/2013/08/06/creative-link-effects/ */
+.brackets-effect::before,
+.brackets-effect::after
+	display: inline-block
+	opacity: 0
+
+.brackets-effect::before
+	margin-right: 0px
+	content: '['
+
+.brackets-effect::after
+	margin-left: 0px
+	content: ']'
+
+.brackets-effect:focus::before,
+.brackets-effect:focus::after
+	opacity: 1

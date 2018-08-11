@@ -18,6 +18,43 @@
         padding: 20px
         background: $main-wrapper-background
 
+    .buttons
+        /* plus button https://jsfiddle.net/robi_osahan/gwgL7Loj/ */
+        .add-review
+            float: right
+            transform: translateZ(0)
+            border: $list-element-border
+            background: $list-element-background
+            cursor: pointer
+            font-size: 22px
+            margin: 0.7em 1.4em
+            height: 2.5em
+            width: 2.5em
+            border-radius: 999px
+            position: relative
+            transition: box-shadow 0.2s,border-color 0.2s;
+
+            &:focus, &:hover
+                border-color: $secondary-header-background
+                box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+            
+            &:after, &:before
+                content: ""
+                display: block
+                background: $secondary-header-background
+                position: absolute
+                top: 50%
+                left: 50%
+                transform: translate(-50%, -50%)
+
+            &:before
+                height: 1em
+                width: 0.17em
+
+            &:after
+                height: 0.17em
+                width: 1em
+
 .reviews-list 
     display: flex
     flex-wrap: wrap
@@ -35,7 +72,7 @@
         & + .no-reviews
             display: block !important
 
-    li 
+    .review
         background: transparent
         display: block
         list-style-type: none
@@ -48,45 +85,71 @@
             width: 100%
             background: rgb(255, 255, 255)
 
+            input[type="text"], textarea
+                font-size: 1em
+                padding: 5px 10px
+                border: $list-element-border
+                background: $secondary-header-text-color
+                transition: background 0.2s, box-shadow 0.2s, border 0.2s
+
+                &:focus
+                    border: 2px solid $primary-accent-color
+                    background: white
+                    box-shadow: 0 0 0 .3rem rgba($primary-accent-color, $default-focus-shadow-opacity)
+
+            textarea
+                width: 100%
+                height: auto
+                min-height: 6.5em
+                resize: vertical
+
+
             .header
                 overflow: hidden
                 background: $secondary-header-background
                 padding: 10px
                 color: $secondary-header-text-color
 
-            .name
-                float: left
-                display: inline
-                margin: 0 !important
-                font-weight: 500
+                .name
+                    float: left
+                    display: inline
+                    margin: 0 !important
+                    font-weight: 500
 
-            .date
-                float: right
-                font-size: 0.95em
-                margin: 0 !important
-                display: inline
-                font-weight: 300
+                .date
+                    float: right
+                    font-size: 0.95em
+                    margin: 0 !important
+                    display: inline
+                    font-weight: 300
 
-            .rating
-                display: block
-                margin: 0px auto
-                padding: 10px 
-                width: auto
-                text-transform: uppercase
-                letter-spacing: 0.2em
-                font-weight: 500
-                color: rgb(255, 255, 255)
+                .rating, .edit, .remove
+                    margin: 0
+                    width: auto
+                    float: left
+                    font-size: 1.7em
+                    text-transform: uppercase
+                    font-weight: 500
 
-                &.green
-                    background: rgb(30, 130, 76)
+                .controls-container
+                    float: right
 
-                &.red
-                    background: rgb(192, 57, 43)
+                .remove
+                    cursor: pointer
+                    padding-right: 0
+
+                    &:hover, &:focus
+                        color: #FF9494
+
+                .edit
+                    cursor: pointer
+                    padding-right: 10px
+
+                    &:hover, &:focus
+                        color: #FFC285
 
         .comment-container
             padding: 20px
-
-            
 
 /* from http://hackingui.com/front-end/a-pure-css-solution-for-multiline-text-truncation/ */
 .comment-text 

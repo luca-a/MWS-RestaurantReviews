@@ -34,38 +34,27 @@
 
         & + .no-restaurants
             display: block !important
-
-    .image 
-        width: 100%
-        height: auto
-        margin: 0
     
-    li 
+    .restaurant
+        position: relative
         background: $list-element-background
         border: $list-element-border
         text-align: center
         width: 100%
         margin: 5px
 
-    .button
-        background: $list-element-button-background
-        border: 1px solid $list-element-button-background
-        color: $list-element-button-text-color
-        display: inline-block
-        margin: 15px auto
-        padding: 10px 30px
-        text-align: center
-        text-decoration: none
-        text-transform: uppercase
-        letter-spacing: 0.1em
-        transition: color 0.2s, background 0.2s, box-shadow 0.2s, border 0.2s
-    
-    .button:hover
-        color: rgb(0, 0, 0)
-        background: $list-element-background
-    
-    .button:focus 
-        color: $header-background
-        background: $list-element-background
-        border: 1px solid $primary-accent-color
-        box-shadow: 0 0 0 .3rem rgba($primary-accent-color, $default-focus-shadow-opacity)
+        .heading
+            position: relative
+            text-align: center
+
+            .name
+                width: 100%
+
+            .star-icon
+                position: absolute
+                right: 10px
+
+        .image 
+            width: 100%
+            height: auto
+            margin: 0

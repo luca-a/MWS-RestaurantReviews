@@ -14,7 +14,3 @@
 #### Production mode
   - Run `npm run build` or `gulp build` in the root directory of the project
   - Run your favourite http server in the `dist` folder
-
-#### Sails Server
-To improve ease of use the sails server is already included in the project directory.
-  - Use `npm run server` to start the server
