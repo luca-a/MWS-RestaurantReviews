@@ -10,4 +10,4 @@
   - Run `npm run developement` or `gulp` in the root directory of the project
 
 #### Production mode
-  - Run `npm run production` or `gulp build` in the root directory of the project
+  - Run `npm run production` or `gulp build` in the root directory of the project an HTTP server will start on port 8080
