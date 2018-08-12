@@ -23,6 +23,9 @@ class DataReader {
 	store(options) {
 		if(options === undefined) return;
 
+		if(options.clear)
+			this.mapped = new Map();
+
 		this.types = options.mapping || this.types;
 
 		const fetcher = options.fetcher ? options.fetcher : this.fetch(this.resource);

@@ -116,7 +116,8 @@ functions.set("database-map", data => {
 		mapping,
 		fetcher() {
 			return database.getList(name);
-		}
+		},
+		clear: true
 	}).then(() => {
 		readers.set(name, reader);
 		databases.set(name, database);

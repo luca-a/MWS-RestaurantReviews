@@ -33,7 +33,7 @@ const syncOfflineActions = () => {
 				}).then(response => {
 					return response.json();
 				}).then(json => {
-					let review = {...json, ...(data.body)};
+					let review = {...json, ...row};
 
 					return db.add(DBname, review);
 				}).then(() => {
