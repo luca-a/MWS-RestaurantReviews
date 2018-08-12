@@ -11,7 +11,7 @@ export default class ServiceWorkerController {
 	register() {
 		let sw = false;
 
-		if(navigator.serviceWorker) {
+		if (navigator.serviceWorker) {
 			sw = navigator.serviceWorker.register(this.file);
 		} else {
 			return Promise.reject("ServiceWorker API is not implemented");
@@ -26,30 +26,38 @@ export default class ServiceWorkerController {
 		result.then(registration => {
 			this.serviceWorker = true;
 
-			if(!navigator.serviceWorker.controller) return;
+			if (!navigator.serviceWorker.controller) return;
 
-			if(registration.waiting) {
+			if (registration.waiting) {
 				this.updatePending(registration.waiting);
 			}
-		
-			if(registration.installing) {
+
+			if (registration.installing) {
 				this.trackInstalling(registration.installing);
 				return;
 			}
 
 			registration.sync.register("sync-actions");
-		
+
 			registration.addEventListener("updatefound", (event) => {
-				if(registration.installing) {
+				if (registration.installing) {
 					this.trackInstalling(registration.installing);
 				}
-				
-				if(event.currentTarget.waiting) {
+
+				if (event.currentTarget.waiting) {
 					this.updatePending(event.currentTarget.waiting);
 				}
 			});
 		}).then(() => {
-
+			if("serviceWorker" in navigator && "SyncManager" in window) {
+				navigator.serviceWorker.ready.then(registration => {
+					return registration.sync.register("sync-actions");
+				}).catch(() => {
+					window.console.error("Unable to register sync");
+				});
+			} else {
+				window.console.error("No SyncManager");
+			}
 		}).catch(error => {
 			window.console.log(error);
 		});
@@ -58,8 +66,8 @@ export default class ServiceWorkerController {
 	}
 
 	refreshListener() {
-		navigator.serviceWorker.addEventListener("controllerchange", event => {	  
-			if(this.refreshing) return;
+		navigator.serviceWorker.addEventListener("controllerchange", event => {
+			if (this.refreshing) return;
 
 			location.reload();
 
@@ -70,16 +78,16 @@ export default class ServiceWorkerController {
 	updatePending(sw) {
 		this.toast.show()
 			.then(answer => {
-				if(answer !== "update") return;
+				if (answer !== "update") return;
 
 				sw.postMessage("refresh");
 			});
 	}
 
 	trackInstalling(sw) {
-		if(sw) {
+		if (sw) {
 			sw.addEventListener("statechange", event => {
-				if(sw.state === "installed") {
+				if (sw.state === "installed") {
 					this.updatePending(sw);
 				}
 			});

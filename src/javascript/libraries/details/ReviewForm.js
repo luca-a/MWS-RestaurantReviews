@@ -27,9 +27,10 @@ export default class ReviewForm extends CustomElement {
 				case "textarea":
 					result[input.name] = input.value;
 					break;
-				default:
 				case "number":
 					result[input.name] = parseInt(input.value);
+					break;
+				default:
 			}
 		}
 

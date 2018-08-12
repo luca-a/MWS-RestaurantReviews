@@ -77,7 +77,7 @@ class DataReader {
 			if(this.types.get(attribute) === "unique")
 				return this.mapped.get(attribute).get(key);
 			else
-				return Array.from(this.mapped.get(attribute).get(key).values());
+				return Array.from(this.mapped.get(attribute).get(key) ? this.mapped.get(attribute).get(key).values() : []);
 		} else {
 			return Array.from(this.mapped.get(attribute).values());
 		}

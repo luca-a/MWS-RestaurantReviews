@@ -40,6 +40,22 @@ export const getRestaurantReviews = restaurant_id => {
 	});
 };
 
+export const getRestaurantReviewsOffline = restaurant_id => {
+	return worker.call("database-map", {
+		name: "temp_reviews",
+		mapping: new Map([
+			["id", "unique"],
+			["restaurant_id", ""]
+		])
+	}).then(() => {
+		return worker.call("get-mapped", {
+			name: "temp_reviews",
+			attribute: "restaurant_id",
+			key: restaurant_id
+		});
+	});
+};
+
 export const getReview = id => {
 	return worker.call("get-mapped", {
 		name: "reviews",

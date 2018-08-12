@@ -3,7 +3,7 @@ import CustomImage from "../common/CustomImage.js";
 import ReviewList from "./ReviewList.js";
 import ReviewForm from "./ReviewForm.js";
 import { setFavorite } from "../common/FavoriteService.js";
-import { getRestaurantReviews } from "../common/ReviewService.js";
+import { getRestaurantReviews, getRestaurantReviewsOffline } from "../common/ReviewService.js";
 import CustomElement from "../common/CustomElement.js";
 import Table from "./Table.js";
 import Toast from "../common/Toast";
@@ -21,8 +21,10 @@ export default class Restaurant {
 		this.image = new CustomImage(".image-container", this.restaurant.template);
 
 		this.toast = new Toast("#toasts");
-
 		this.toast.set("Add a review", "You have to submit the review you're writing before creating a new one");
+
+		this.offlineToast = new Toast("#toasts");
+		this.offlineToast.set("Offline", "You're offline the review will be created once connection is reestablished");
 
 		this.reviewForm = new ReviewForm(".new-review-container", "#templates-container > .add-review-form");
 
@@ -32,13 +34,18 @@ export default class Restaurant {
 	
 	appendForm(review) {
 		if(this.reviewForm.adding)
-			this.toast.show(15);
+			this.toast.show(10);
 		else
 			this.reviewForm.appendForm(review).then(response => {
-				if(response.action === "create")
+				if(response.action === "create") {
+					if(!response.result.id)
+						this.offlineToast.show(10);
+
 					this.reviews.appendReviews([response.result]);
-				else
+				} else {
 					this.loadReviews(this.id);
+					this.reviews.clear();
+				}
 			});
 	}
 
@@ -78,17 +85,25 @@ export default class Restaurant {
 		if(restaurant.operating_hours)
 			this.setHours(restaurant.operating_hours);
 
-		this.loadReviews(this.id);
+		this.reviews.clear();
+		this.loadReviews(this.id).then(() => {
+			return this.loadOfflineReviews(this.id);
+		});
 	}
 
 	loadReviews(id) {
-		getRestaurantReviews(id).then(reviews => {
+		return getRestaurantReviews(id).then(reviews => {
 			this.setReviews(reviews);
-		})
+		});
+	}
+
+	loadOfflineReviews(id) {
+		return getRestaurantReviewsOffline(id).then(reviews => {
+			this.setReviews(reviews);
+		});
 	}
 
 	setReviews(reviews) {
-		this.reviews.clear();
 		this.reviews.appendReviews(reviews);
 	}
 

@@ -64,13 +64,6 @@ functions.set("put-map", data => {
 		fetcher
 	}).then(() => {
 		database.add(name, reader.getValue("id"));
-	}).catch(() => {
-		return reader.store({
-			mapping,
-			fetcher() {
-				return database.getList(name);
-			}
-		});
 	}).then(() => {
 		readers.set(name, reader);
 		databases.set(name, database);
@@ -92,17 +85,21 @@ functions.set("post-map", data => {
 
 				return newObject;
 			});
-
+	
 	return reader.store({
 		fetcher
-	}).then(() => {
-		database.add(name, reader.getValue("id"));
-	}).catch(() => {
-		return reader.store({
-			mapping,
-			fetcher() {
-				return database.getList(name);
-			}
+	}).catch(error => {
+		const dbName = "temp_" + name;
+		const tempDatabase = databases.get(dbName) || new DatabaseController(idb, dbName, dbName);
+
+		return tempDatabase.keys(dbName).then(keys => {
+			data.body.id = keys[keys.length - 1] + 1 || 0;
+
+			return tempDatabase.add(dbName, data.body);
+		}).then(() => {
+			newObject = data.body;
+
+			databases.set(dbName, tempDatabase);
 		});
 	}).then(() => {
 		readers.set(name, reader);
@@ -112,12 +109,30 @@ functions.set("post-map", data => {
 	});
 });
 
+functions.set("database-map", data => {
+	const name = data.name, mapping = data.mapping,
+	reader = readers.get(name) || new DataReader(),
+	database = databases.get(name) || new DatabaseController(idb, name, name);
+
+	return reader.store({
+		mapping,
+		fetcher() {
+			return database.getList(name);
+		}
+	}).then(() => {
+		readers.set(name, reader);
+		databases.set(name, database);
+	});
+});
+
 functions.set("get-mapped-keys", data => {
-	return readers.get(data.name).getKeys(data.attribute);
+	if(readers.get(data.name))
+		return readers.get(data.name).getKeys(data.attribute);
 });
 
 functions.set("get-mapped", data => {
-	return readers.get(data.name).getValue(data.attribute, data.key);
+	if(readers.get(data.name))
+		return readers.get(data.name).getValue(data.attribute, data.key);
 });
 
 functions.set("intersect", data => {

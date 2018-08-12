@@ -88,7 +88,12 @@ export default class ReviewList extends CustomElement {
 
 		for(let review of reviews) {
 			this.template.replace(".name", review.name);
-			this.template.replace(".date", this.getDate(review.createdAt, review.updatedAt));
+
+			if(review.createdAt)
+				this.template.replace(".date", this.getDate(review.createdAt, review.updatedAt));
+			else
+				this.template.replace(".date", "Sending...");
+			
 			this.template.replace(".comment-text", review.comments);
 			this.template.replace(".rating", this.getRating(review.rating));
 
@@ -96,7 +101,8 @@ export default class ReviewList extends CustomElement {
 
 			const controls = this.template.child(".controls-container");
 
-			controls.setAttribute("data-review-id", review.id);
+			if(review.id)
+				controls.setAttribute("data-review-id", review.id);
 
 			controls.addEventListener("click", event => this.controlsClicked(event));
 			controls.addEventListener("keydown", event => this.controlsClicked(event));

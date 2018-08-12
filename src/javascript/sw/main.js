@@ -1,4 +1,4 @@
-const staticCacheName = "restaurant-reviews-v1",
+const staticCacheName = "restaurant-reviews-v2",
 	imageCache = "restaurant-reviews-images-v1";
 
 var allCaches = [
@@ -12,7 +12,38 @@ const resources = [
 ];
 
 const syncOfflineActions = () => {
+	if (typeof DatabaseController === "undefined" && typeof idb === "undefined")
+		importScripts("js/worker/idb.js", "js/worker/DatabaseController.js");
 
+	const tempDBname = "temp_reviews", tempDb = new DatabaseController(idb, tempDBname, tempDBname),
+		DBname = "reviews", db = new DatabaseController(idb, DBname, DBname);
+
+	return tempDb.getList(tempDBname).then(list => {
+		const fetches = new Array(list.lenght);
+		let id;
+
+		for (let row of list) {
+			id = row.id;
+			delete row.id;
+
+			fetches.push(
+				fetch("http://localhost:1337/reviews/", {
+					method: "POST",
+					body: JSON.stringify(row)
+				}).then(response => {
+					return response.json();
+				}).then(json => {
+					let review = {...json, ...(data.body)};
+
+					return db.add(DBname, review);
+				}).then(() => {
+					return tempDb.delete(tempDBname, id);
+				})
+			);
+		}
+
+		return Promise.all(fetches);
+	});
 };
 
 const servePage = request => {
@@ -85,27 +116,27 @@ self.addEventListener("activate", event => {
 self.addEventListener("fetch", event => {
 	let request = event.request.clone();
 
-	switch(request.method) {
+	switch (request.method) {
 		case "GET":
 			let requestUrl = new URL(request.url);
 
-			if(requestUrl.origin === location.origin) {
-				if(requestUrl.pathname.includes(".jpg")) {
+			if (requestUrl.origin === location.origin) {
+				if (requestUrl.pathname.includes(".jpg")) {
 					event.respondWith(serveImage(request));
 					return;
 				}
-		
-				if(requestUrl.pathname.includes(".html")) {
+
+				if (requestUrl.pathname.includes(".html")) {
 					event.respondWith(servePage(request));
 					return;
 				}
-		
-				if(requestUrl.pathname.includes(".js") || requestUrl.pathname.includes(".css")) {
+
+				if (requestUrl.pathname.includes(".js") || requestUrl.pathname.includes(".css")) {
 					event.respondWith(serve(request));
 					return;
 				}
 			}
-		
+
 			event.respondWith(
 				caches.match(request).then(response => {
 					return response || fetch(request);
@@ -121,14 +152,14 @@ self.addEventListener("fetch", event => {
 	}
 });
 
-self.addEventListener("sync", function(event) {
-	if(event.tag == "sync-actions") {
+self.addEventListener("sync", event => {
+	if (event.tag == "sync-actions") {
 		event.waitUntil(syncOfflineActions());
 	}
 });
 
 self.addEventListener("message", event => {
-	if(event.data === "refresh") {
+	if (event.data === "refresh") {
 		self.skipWaiting();
 	}
 });
