@@ -1,7 +1,7 @@
 import Template from "../common/Template.js";
 import CustomElement from "../common/CustomElement.js";
 import { reviewsSettings } from "../configuration/settings.js";
-import { deleteReview, getReview } from "../common/ReviewService.js"
+import { deleteReview, getReview } from "../common/ReviewService.js";
 
 export default class ReviewList extends CustomElement {
 	constructor(selector, templateSelector) {
@@ -101,11 +101,13 @@ export default class ReviewList extends CustomElement {
 
 			const controls = this.template.child(".controls-container");
 
-			if(review.id)
+			if(review.id) {
 				controls.setAttribute("data-review-id", review.id);
-
-			controls.addEventListener("click", event => this.controlsClicked(event));
-			controls.addEventListener("keydown", event => this.controlsClicked(event));
+				controls.addEventListener("click", event => this.controlsClicked(event));
+				controls.addEventListener("keydown", event => this.controlsClicked(event));
+			} else {
+				controls.parentElement.removeChild(controls);
+			}
 
 			this.template.child(".comment-container").addEventListener("mousedown", this.constructor.toggleReview);
 

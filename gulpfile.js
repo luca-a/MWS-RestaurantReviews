@@ -132,7 +132,6 @@ gulp.task("build", done => {
 	production();
 
 	sequence(
-		"clean:dist"
 		["images", "webpack", "service-worker", "web-worker", "public"]
 	);
 
@@ -182,9 +181,8 @@ gulp.task("lint", done => {
 		.pipe(
 			eslint()
 		)
-		.pipe(
-			eslint.formatEach("compact", process.stderr)
-		);
+		.pipe(eslint.format())
+        .pipe(eslint.failAfterError());
 
 	done();
 });
@@ -194,8 +192,10 @@ gulp.task("webpack", done => {
 		UglifyJsPlugin = require("uglifyjs-webpack-plugin"),
 		HtmlPlugin = require("html-webpack-plugin"),
 		CssExtractPlugin = require("mini-css-extract-plugin"),
-		OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin"),
-		CompressionPlugin = require("compression-webpack-plugin");
+		OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+		/*
+		,CompressionPlugin = require("compression-webpack-plugin");
+		*/
 
 	deleteFiles([
 		configuration.destination + "/*.js",
@@ -274,15 +274,17 @@ gulp.task("webpack", done => {
 			new CssExtractPlugin({
 				filename: "[name].css",
 				chunkFilename: "[id].css"
-			}),
+			})
+			/*
+			,
 			new CompressionPlugin({
-				exclude: /(node_modules|bower_components|server)/,
-				asset: "[path].gz[query]",
+				asset: "[path].gz",
 				algorithm: "gzip",
 				test: /\.js$|\.css$|\.html$/,
 				threshold: 10240,
-				minRatio: 0
+				minRatio: 0.8
 			})
+			*/
 		],
 		optimization: {
 			minimizer: [
@@ -312,6 +314,7 @@ gulp.task("service-worker", done => {
 			gulpif(
 				tasksettings.transpile || tasksettings.compress,
 				babel({
+					plugins: ["transform-object-rest-spread"],
 					presets: ["env"]
 				}).on("error", e => {
 					console.log(e);
@@ -354,6 +357,7 @@ gulp.task("web-worker", done => {
 			gulpif(
 				tasksettings.transpile || tasksettings.compress,
 				babel({
+					plugins: ["transform-object-rest-spread"],
 					presets: ["env"]
 				}).on("error", e => {
 					console.log(e);

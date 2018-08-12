@@ -67,8 +67,6 @@ import ServiceWorkerController from "./common/ServiceWorkerController.js";
 				key: "id",
 				list
 			}).then(restaurantsJson => {
-				console.log(restaurantsJson);
-
 				restaurants.appendRestaurants(restaurantsJson);
 			});
 		};
@@ -91,8 +89,6 @@ import ServiceWorkerController from "./common/ServiceWorkerController.js";
 				attribute: "cuisine_type"
 			});
 		}).then(response => {
-			console.log(response);
-
 			filters.setOptions("cuisines", response);
 
 			return worker.call("get-mapped-keys", {
@@ -100,8 +96,6 @@ import ServiceWorkerController from "./common/ServiceWorkerController.js";
 				attribute: "neighborhood"
 			});
 		}).then(response => {
-			console.log(response);
-
 			filters.setOptions("neighborhoods", response);
 
 			filters.change("cuisines", update);

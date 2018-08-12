@@ -18,19 +18,19 @@ export default class ReviewForm extends CustomElement {
 
 		for(let input of form) {
 			switch(input.type) {
-				case "checkbox":
-				case "radio":
-					if(input.checked)
-						result[input.name] = input.value;
-					break;
-				case "text":
-				case "textarea":
+			case "checkbox":
+			case "radio":
+				if(input.checked)
 					result[input.name] = input.value;
-					break;
-				case "number":
-					result[input.name] = parseInt(input.value);
-					break;
-				default:
+				break;
+			case "text":
+			case "textarea":
+				result[input.name] = input.value;
+				break;
+			case "number":
+				result[input.name] = parseInt(input.value);
+				break;
+			default:
 			}
 		}
 
@@ -41,16 +41,16 @@ export default class ReviewForm extends CustomElement {
 		for(let input of form)
 			if(data[input.name])
 				switch(input.type) {
-					case "checkbox":
-					case "radio":
-						if(data[input.name] == input.value)
-							input.checked = true;
-						break;
-					case "text":
-					case "textarea":
-						input.value = data[input.name];
-						break;
-					default:
+				case "checkbox":
+				case "radio":
+					if(data[input.name] == input.value)
+						input.checked = true;
+					break;
+				case "text":
+				case "textarea":
+					input.value = data[input.name];
+					break;
+				default:
 				}
 	}
 
@@ -83,9 +83,9 @@ export default class ReviewForm extends CustomElement {
 			ReviewForm.setFormValues(this.form.element, data);
 		}
 
-		this.appendElement(this.form.element);
-
-		this.form.element[0].focus();
+		this.appendElementWait(this.form.element).then(() => {
+			this.form.element[0].focus();
+		});
 
 		return new Promise(resolve => {
 			this.form.element.addEventListener("submit", event => {

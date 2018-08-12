@@ -53,8 +53,6 @@ functions.set("put-map", data => {
 		database = databases.get(name),
 		fetcher = service.put(data.path, data.body)
 			.then(response => {
-				console.log(response);
-
 				status = response.status;
 
 				return response.json();
@@ -111,8 +109,8 @@ functions.set("post-map", data => {
 
 functions.set("database-map", data => {
 	const name = data.name, mapping = data.mapping,
-	reader = readers.get(name) || new DataReader(),
-	database = databases.get(name) || new DatabaseController(idb, name, name);
+		reader = readers.get(name) || new DataReader(),
+		database = databases.get(name) || new DatabaseController(idb, name, name);
 
 	return reader.store({
 		mapping,
@@ -165,9 +163,6 @@ functions.set("get-mapped-intersect", data => {
 functions.set("post", data => {
 	return service.post(data.path, data.body)
 		.then(response => {
-			console.log(response);
-			console.log(response.body);
-
 			return response.status;
 		});
 });
@@ -175,8 +170,6 @@ functions.set("post", data => {
 functions.set("put", data => {
 	return service.put(data.path, data.body)
 		.then(response => {
-			console.log(response);
-
 			return response.status;
 		});
 });
@@ -184,8 +177,6 @@ functions.set("put", data => {
 functions.set("delete", data => {
 	return service.delete(data.path)
 		.then(response => {
-			console.log(response);
-
 			return response.status;
 		});
 });
@@ -194,8 +185,6 @@ self.addEventListener("message", event => {
 	let data = event.data;
 
 	let response = functions.get(data.fn)(data.arguments);
-
-	console.log(data.fn, data.arguments, response);
 
 	if (response instanceof Promise)
 		response.then(result => respond(data.id, result));

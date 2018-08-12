@@ -5,7 +5,7 @@ export const deleteReview = id => {
 		name: "reviews",
 		path: `reviews/${id}`
 	});
-}
+};
 
 export const createReview = body => {
 	return worker.call("post-map", {

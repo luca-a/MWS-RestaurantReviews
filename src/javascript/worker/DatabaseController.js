@@ -3,9 +3,9 @@ class DatabaseController {
 		this.dbPromise = idb.open(dbname, 1, upgradeDb => {
 			let store;
 
-			switch (upgradeDb.oldVersion) {
-				case 0:
-					store = upgradeDb.createObjectStore(name, { keyPath: "id" });
+			switch(upgradeDb.oldVersion) {
+			case 0:
+				store = upgradeDb.createObjectStore(name, { keyPath: "id" });
 			}
 		});
 	}
@@ -30,7 +30,7 @@ class DatabaseController {
 	/* from idb docs https://github.com/jakearchibald/idb */
 	delete(name, key) {
 		return this.dbPromise.then(db => {
-			const tx = db.transaction(name, 'readwrite');
+			const tx = db.transaction(name, "readwrite");
 			tx.objectStore(name).delete(key);
 			return tx.complete;
 		});

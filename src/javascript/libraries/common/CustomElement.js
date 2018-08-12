@@ -1,3 +1,5 @@
+import { resolve } from "path";
+
 export default class CustomElement {
 	constructor(selector, container) {
 		if(selector)
@@ -13,6 +15,15 @@ export default class CustomElement {
 
 	static parseElement(selector, container = document) {
 		return typeof selector === "string" ? container.querySelector(selector) : selector;
+	}
+
+	appendElementWait(element, container = this.element) {
+		return new Promise(resolve => {
+			requestAnimationFrame(() => {
+				container.appendChild(element);
+				resolve();
+			});
+		});
 	}
 
 	appendElement(element, container = this.element) {

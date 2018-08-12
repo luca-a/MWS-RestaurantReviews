@@ -1,4 +1,4 @@
-const staticCacheName = "restaurant-reviews-v2",
+const staticCacheName = "restaurant-reviews-v1",
 	imageCache = "restaurant-reviews-images-v1";
 
 var allCaches = [
@@ -148,7 +148,6 @@ self.addEventListener("fetch", event => {
 		case "POST":
 		case "PUT":
 		case "DELETE":
-			console.log(request);
 	}
 });
 

@@ -17,6 +17,6 @@ const getInstance = () => {
 	}
 
 	return instance;
-}
+};
 
 export default getInstance();
